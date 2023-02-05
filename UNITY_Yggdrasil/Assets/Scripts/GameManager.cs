@@ -13,18 +13,33 @@ public class GameManager : MonoBehaviour
     public int health = 3;
     public int score = 0;
 
+    public float DragonSpawnTime = 2f;
+    public GameObject dragon;
+    float screenX;
     // Start is called before the first frame update
+    
+    void DragonSpawn(){
+      if (health != 0 ){
+        screenX = Random.Range(-5, 12);
+        Vector2 randomPosition = new Vector2(screenX, -8);
+        Instantiate(dragon, randomPosition, Quaternion.identity);
+        Invoke("DragonSpawn", DragonSpawnTime);
+        
+      }
+    }
+    
     void Start()
     {
       bindMovement = false;
       health = 3;
       score = 0;
+      Invoke("DragonSpawn", DragonSpawnTime);
     }
 
     // Update is called once per frame
     void Update()
     {
-
+    
     }
 
     public void SubtractLife(){
