@@ -15,10 +15,6 @@ public class DropMagicScript : MonoBehaviour
 
     }
 
-    void DropMagic(){
-
-    }
-
     IEnumerator CooldownWait(){
        yield return new WaitForSeconds(cooldownTime);
        cooldown = false;
@@ -28,11 +24,15 @@ public class DropMagicScript : MonoBehaviour
     void Update()
     {
       if (Input.GetKey(KeyCode.Space) && (cooldown == false)){
-          DropMagic();
+          gm.pms.animator.SetBool("Throwing", true);
           GameObject spawnMagic = Instantiate(magic, gm.pms.gameObject.transform.position, gm.pms.gameObject.transform.rotation);
           cooldown = true;
           StartCoroutine(CooldownWait());
       }
 
+    }
+
+    void LateUpdate(){
+      gm.pms.animator.SetBool("Throwing", false);
     }
 }
