@@ -5,15 +5,39 @@ using UnityEngine;
 public class DragonScript : MonoBehaviour
 {
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    public GameManager gm;
+    public float speed = 1f;
+    public GameObject dragonPrefab;
+    public Vector3 bottomPosition;
 
+
+    void Start(){
+        bottomPosition = new Vector3(transform.position.x, 0, transform.position.z);
     }
 
-    // Update is called once per frame
     void Update()
     {
+        // Move the dragon up the screen
+        transform.position += Vector3.up * speed * Time.deltaTime;
+
+        // Check if the dragon is touching the branch
 
     }
+
+  void OnTriggerEnter2D(Collider2D collision) {
+
+    if (collision.gameObject.tag == "Root"){
+        Destroy(collision.gameObject);
+        gm.SubtractLife();
+        Destroy(this.gameObject);
+    }
+
+    if (collision.gameObject.tag == "Magic"){
+        Destroy(collision.gameObject);
+        gm.AddPoints();
+        Destroy(this.gameObject);
+    }
+  }
+
+
 }
